@@ -11,6 +11,33 @@
         <div class="flex justify-content-center flex-wrap card-container yellow-container">
             <h3>Lista de Personas</h3>
         </div>
+
+        <div class="card">
+            <p:dataTable value="#{indexController.personas}" var="persona">
+                <f:facet name="header">
+                    <div class="flex justify-content-center flex-wrap card-container yellow-container">
+                        <div class="flex align-items-center justify-content-center w-20rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round-2xl m-2">
+                            <h3>Lista de Personas</h3>
+                        </div>
+                    </div>
+                </f:facet>
+                <p:column headerText="Id">
+                    <h:outputText value="#{persona.id_persona}" />
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{persona.nombre}" />
+                </p:column>
+                <p:column headerText="Apellido">
+                    <h:outputText value="#{persona.apellido}" />
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{persona.email}" />
+                </p:column>
+                <p:column headerText="Telefono">
+                    <h:outputText value="#{persona.telefono}" />
+                </p:column>
+            </p:dataTable>
+        </div>
     </div>
 </h:body>
 </html>
