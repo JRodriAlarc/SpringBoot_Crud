@@ -12,32 +12,75 @@
             <h3>Lista de Personas</h3>
         </div>
 
-        <div class="card">
-            <p:dataTable value="#{indexController.personas}" var="persona">
-                <f:facet name="header">
-                    <div class="flex justify-content-center flex-wrap card-container yellow-container">
-                        <div class="flex align-items-center justify-content-center w-20rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round-2xl m-2">
-                            <h3>Lista de Personas</h3>
+        <h:form id="forma-personas">
+            <p:growl id="mensajes" showDetail="true" />
+            
+            <div class="card">
+                <p:menubar>
+                    <p:menuitem value="Inicio" icon="pi pi-fw pi-user" update=":forma-personas:personas-tabla" actionListener="#{indexController.cargarDatos}" />
+                    <p:menuitem value="Nuevo User" icon="pi pi-fw pi-plus" actionListener="#{indexController.agregarPersona}" update=":forma-modal:persona-ventana" oncomplete="PF('ventanaModalPersona').show()"/>
+                </p:menubar>
+            </div>
+            
+            <div class="card">
+                <p:dataTable value="#{indexController.personas}" var="persona" id="personas-tabla" widgetVar="personasTabla">
+                    <f:facet name="header">
+                        <div class="flex justify-content-center flex-wrap card-container yellow-container">
+                            <div class="flex align-items-center justify-content-center w-20rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round-2xl m-2">
+                                <h3>Lista de Personas</h3>
+                            </div>
                         </div>
+                    </f:facet>
+                    <p:column headerText="Id">
+                        <h:outputText value="#{persona.id_persona}" />
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{persona.nombre}" />
+                    </p:column>
+                    <p:column headerText="Apellido">
+                        <h:outputText value="#{persona.apellido}" />
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{persona.email}" />
+                    </p:column>
+                    <p:column headerText="Telefono">
+                        <h:outputText value="#{persona.telefono}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <h:form id="forma-modal">
+            <p:dialog header="Detalles Persona" showEffect="fade" modal="true" widgetVar="ventanaModalPersona" responsive="true">
+                <p:outputPanel id="persona-ventana" class="ui-fluid">
+                    <div class="field">
+                        <p:outputLabel for="nombre">Nombre:</p:outputLabel>
+                        <p:inputText id="nombre" value="#{indexController.personaSeleccionada.nombre}" required="true" />
                     </div>
+                    <div class="field">
+                        <p:outputLabel for="apellido">Apellido:</p:outputLabel>
+                        <p:inputText id="apellido" value="#{indexController.personaSeleccionada.apellido}" required="true" />
+                    </div>
+                    <div class="field">
+                        <p:outputLabel for="genero">Genero:</p:outputLabel>
+                        <p:selectOneMenu id="genero" value="#{indexController.personaSeleccionada.genero}">
+                            <f:selectItem itemLabel="Seleciona una Opción" itemValue=""/>
+                            <f:selectItem itemLabel="Hombre" itemValue="Masculino"/>
+                            <f:selectItem itemLabel="Mujer" itemValue="Femenino"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="field">
+                        <p:outputLabel for="email">Email:</p:outputLabel>
+                        <p:inputText id="email" value="#{indexController.personaSeleccionada.email}" />
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="Guardar" icon="pi pi-check" process="persona-ventana @this" actionListener="#{indexController.guardarPersona}" />
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalPersona').hide()" class="ui-button-secondary" type="button" />
                 </f:facet>
-                <p:column headerText="Id">
-                    <h:outputText value="#{persona.id_persona}" />
-                </p:column>
-                <p:column headerText="Nombre">
-                    <h:outputText value="#{persona.nombre}" />
-                </p:column>
-                <p:column headerText="Apellido">
-                    <h:outputText value="#{persona.apellido}" />
-                </p:column>
-                <p:column headerText="Email">
-                    <h:outputText value="#{persona.email}" />
-                </p:column>
-                <p:column headerText="Telefono">
-                    <h:outputText value="#{persona.telefono}" />
-                </p:column>
-            </p:dataTable>
-        </div>
+            </p:dialog>
+        </h:form>
+
     </div>
 </h:body>
 </html>
