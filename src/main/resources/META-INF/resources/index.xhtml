@@ -79,6 +79,10 @@
                         <p:outputLabel for="email">Email:</p:outputLabel>
                         <p:inputText id="email" value="#{indexController.personaSeleccionada.email}" />
                     </div>
+                    <div class="field">
+                        <p:outputLabel for="telefono">Telefono:</p:outputLabel>
+                        <p:inputText id="telefono" value="#{indexController.personaSeleccionada.telefono}" />
+                    </div>
                 </p:outputPanel>
                 <f:facet name="footer">
                     <p:commandButton value="Guardar" icon="pi pi-check" process="persona-ventana @this" actionListener="#{indexController.guardarPersona}" />
