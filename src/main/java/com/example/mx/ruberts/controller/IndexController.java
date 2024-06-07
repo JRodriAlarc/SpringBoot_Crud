@@ -44,11 +44,16 @@ public class IndexController {
 
     public void guardarPersona(){
         logger.info("Persona a Guardar: " + this.personaSeleccionada);
+        //Agregar Personas
         if (this.personaSeleccionada.getId_persona() == null) {
             this.personaServicio.guardarPersona(this.personaSeleccionada);
             this.personas.add(this.personaSeleccionada); //Agregar a la interfaz
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Persona registrada"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Persona Registrada"));
+        } else{ //Modificar Personas
+            this.personaServicio.guardarPersona(this.personaSeleccionada);
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Persona Actualizada"));
         }
 
         //Ocultar la ventana Modal

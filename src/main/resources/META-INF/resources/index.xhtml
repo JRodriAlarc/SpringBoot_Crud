@@ -46,6 +46,12 @@
                     <p:column headerText="Telefono">
                         <h:outputText value="#{persona.telefono}" />
                     </p:column>
+                    <p:column>
+                        <p:commandButton value="Editar" icon="pi pi-pencil" update=":forma-modal:persona-ventana" oncomplete="PF('ventanaModalPersona').show()" process="@this" class="ui-button-primary" style="margin-right: 0.5rem"> 
+                            <f:setPropertyActionListener target="#{indexController.personaSeleccionada}" value="#{persona}" />
+                            <p:resetInput target=":forma-modal:persona-ventana" />
+                        </p:commandButton>
+                    </p:column>
                 </p:dataTable>
             </div>
         </h:form>
