@@ -51,6 +51,9 @@
                             <f:setPropertyActionListener target="#{indexController.personaSeleccionada}" value="#{persona}" />
                             <p:resetInput target=":forma-modal:persona-ventana" />
                         </p:commandButton>
+                        <p:commandButton value="Eliminar" icon="pi pi-trash" oncomplete="PF('eliminarPersonaVentana').show()" process="@this" class="ui-button-danger">
+                            <f:setPropertyActionListener target="#{indexController.personaSeleccionada}" value="#{persona}" />
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
             </div>
@@ -89,6 +92,11 @@
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalPersona').hide()" class="ui-button-secondary" type="button" />
                 </f:facet>
             </p:dialog>
+
+            <p:confirmDialog header="Confirmar" showEffect="fade" widgetVar="eliminarPersonaVentana" width="300" message="¿Esta seguro de Eliminar a la Persona?" severity="warn"> 
+                <p:commandButton value="Si" icon="pi pi-check" process="@this" actionListener="#{indexController.eliminarPersona}" oncomplete="PF('eliminarPersonaVentana').hide()" />
+                <p:commandButton type="button" value="No" icon="pi pi-times" onclick="PF('eliminarPersonaVentana').hide()" styleClass="ui ui-button-secondary" />
+            </p:confirmDialog>
         </h:form>
 
     </div>

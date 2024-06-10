@@ -38,7 +38,7 @@ public class IndexController {
     }
 
     public void agregarPersona(){
-        logger.info("Se crea un objeto personaSelecionada para el caso de agregar");
+        logger.info("Se crea un objeto 'personaSelecionada' para el caso de agregar");
         this.personaSeleccionada = new Persona();
     }
 
@@ -58,6 +58,26 @@ public class IndexController {
 
         //Ocultar la ventana Modal
         PrimeFaces.current().executeScript("PF('ventanaModalPersona').hide()");
+        
+        //Actualizar la tabla
+        PrimeFaces.current().ajax().update("forma-personas:mensajes", "forma-personas:personas-tabla");
+
+        //Resetear el Objeto seleccionado de la tabla
+        this.personaSeleccionada = null;
+    }
+
+    public void eliminarPersona(){
+        logger.info("Persona Eliminada: " + this.personaSeleccionada);
+        this.personaServicio.eliminarPersona(this.personaSeleccionada);
+        
+        //Eliminar la Persona de la lista en Memoria
+        this.personas.remove(this.personaSeleccionada);
+
+        //Resetear el Objeto seleccionado de la tabla
+        this.personaSeleccionada = null;
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Persona Eliminada"));
+
         //Actualizar la tabla
         PrimeFaces.current().ajax().update("forma-personas:mensajes", "forma-personas:personas-tabla");
     }
