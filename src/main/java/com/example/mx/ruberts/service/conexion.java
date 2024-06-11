@@ -12,7 +12,7 @@ import org.bson.Document;
 
 public class conexion {
     public static void main(String[] args) {
-        String connectionString = "mongodb+srv://pemamah951:VT3eN3gzAHuVlqjz@rubertsdenim.ab4rawm.mongodb.net/?retryWrites=true&w=majority&appName=RubertsDenim";
+        String connectionString = "mongodb+srv://xipet82303:AbuRGU5o49IhicZj@rubertsdenim.5i9hjjj.mongodb.net/?retryWrites=true&w=majority&appName=RubertsDenim";
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
