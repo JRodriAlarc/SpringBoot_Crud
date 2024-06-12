@@ -4,56 +4,58 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="img/LogoRubertsDenim.png" />
-    <title>Personas</title>
+    <title>Productos</title>
     <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css" />
 </h:head>
 <h:body>
     <div class="card">
-        <div class="flex justify-content-center flex-wrap card-container yellow-container">
-            <h3>Lista de Personas</h3>
-        </div>
-
-        <h:form id="forma-personas">
+        <h:form id="forma-inventario">
             <p:growl id="mensajes" showDetail="true" />
             
             <div class="card">
                 <p:menubar>
-                    <p:menuitem value="Inicio" icon="pi pi-fw pi-user" update=":forma-personas:personas-tabla" actionListener="#{indexController.cargarDatos}" />
-                    <p:menuitem value="Nuevo User" icon="pi pi-fw pi-plus" actionListener="#{indexController.agregarPersona}" update=":forma-modal:persona-ventana" oncomplete="PF('ventanaModalPersona').show()"/>
+                    <p:menuitem value="Inicio" icon="pi pi-fw pi-user" update=":forma-inventario:inventario-tabla" actionListener="#{indexController.cargarDatos}" />
+                    <p:menuitem value="Producto Nuevo" icon="pi pi-fw pi-plus" actionListener="#{indexController.agregarProducto}" update=":forma-modal:producto-ventana" oncomplete="PF('ventanaModalProducto').show()"/>
                 </p:menubar>
             </div>
             
             <div class="card">
-                <p:dataTable value="#{indexController.personas}" var="persona" id="personas-tabla" widgetVar="personasTabla">
+                <p:dataTable value="#{indexController.inventario}" var="producto" id="inventario-tabla" widgetVar="productosTabla">
                     <f:facet name="header">
                         <div class="flex justify-content-center flex-wrap card-container yellow-container">
                             <div class="flex align-items-center justify-content-center w-20rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round-2xl m-2">
-                                <h3>Lista de Personas</h3>
+                                <h3>Lista de Productos</h3>
                             </div>
                         </div>
                     </f:facet>
                     <p:column headerText="Id">
-                        <h:outputText value="#{persona.id_persona}" />
+                        <h:outputText value="#{producto.idProducto}" />
                     </p:column>
                     <p:column headerText="Nombre">
-                        <h:outputText value="#{persona.nombre}" />
+                        <h:outputText value="#{producto.nombreProducto}" />
                     </p:column>
-                    <p:column headerText="Apellido">
-                        <h:outputText value="#{persona.apellido}" />
+                    <p:column headerText="Cantidad">
+                        <h:outputText value="#{producto.cantidadProducto}" />
                     </p:column>
-                    <p:column headerText="Email">
-                        <h:outputText value="#{persona.email}" />
+                    <p:column headerText="Color">
+                        <h:outputText value="#{producto.colorProducto}" />
                     </p:column>
-                    <p:column headerText="Telefono">
-                        <h:outputText value="#{persona.telefono}" />
+                    <p:column headerText="Material">
+                        <h:outputText value="#{producto.materialProducto}" />
+                    </p:column>
+                    <p:column headerText="Tamaño">
+                        <h:outputText value="#{producto.tamanioProducto}" />
+                    </p:column>
+                    <p:column headerText="Imagen">
+                        <h:graphicImage value="#{producto.imagenUrlProducto}" width="100" height="100" />
                     </p:column>
                     <p:column>
-                        <p:commandButton value="Editar" icon="pi pi-pencil" update=":forma-modal:persona-ventana" oncomplete="PF('ventanaModalPersona').show()" process="@this" class="ui-button-primary" style="margin-right: 0.5rem"> 
-                            <f:setPropertyActionListener target="#{indexController.personaSeleccionada}" value="#{persona}" />
-                            <p:resetInput target=":forma-modal:persona-ventana" />
+                        <p:commandButton value="Editar" icon="pi pi-pencil" update=":forma-modal:producto-ventana" oncomplete="PF('ventanaModalProducto').show()" process="@this" class="ui-button-primary" style="margin-right: 0.5rem"> 
+                            <f:setPropertyActionListener target="#{indexController.inventarioSelecionado}" value="#{producto}" />
+                            <p:resetInput target=":forma-modal:producto-ventana" />
                         </p:commandButton>
-                        <p:commandButton value="Eliminar" icon="pi pi-trash" oncomplete="PF('eliminarPersonaVentana').show()" process="@this" class="ui-button-danger">
-                            <f:setPropertyActionListener target="#{indexController.personaSeleccionada}" value="#{persona}" />
+                        <p:commandButton value="Eliminar" icon="pi pi-trash" oncomplete="PF('eliminarProductoVentana').show()" process="@this" class="ui-button-danger">
+                            <f:setPropertyActionListener target="#{indexController.inventarioSelecionado}" value="#{producto}" />
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
@@ -61,42 +63,45 @@
         </h:form>
 
         <h:form id="forma-modal">
-            <p:dialog header="Detalles Persona" showEffect="fade" modal="true" widgetVar="ventanaModalPersona" responsive="true">
-                <p:outputPanel id="persona-ventana" class="ui-fluid">
+            <p:dialog header="Detalles Producto" showEffect="fade" modal="true" widgetVar="ventanaModalProducto" responsive="true">
+                <p:outputPanel id="producto-ventana" class="ui-fluid">
                     <div class="field">
                         <p:outputLabel for="nombre">Nombre:</p:outputLabel>
-                        <p:inputText id="nombre" value="#{indexController.personaSeleccionada.nombre}" required="true" />
+                        <p:inputText id="nombre" value="#{indexController.inventarioSelecionado.nombreProducto}" required="true" />
                     </div>
                     <div class="field">
-                        <p:outputLabel for="apellido">Apellido:</p:outputLabel>
-                        <p:inputText id="apellido" value="#{indexController.personaSeleccionada.apellido}" required="true" />
+                        <p:outputLabel for="cantidad">Cantidad:</p:outputLabel>
+                        <p:inputText id="cantidad" value="#{indexController.inventarioSelecionado.cantidadProducto}" required="true" />
                     </div>
                     <div class="field">
-                        <p:outputLabel for="genero">Genero:</p:outputLabel>
-                        <p:selectOneMenu id="genero" value="#{indexController.personaSeleccionada.genero}">
-                            <f:selectItem itemLabel="Seleciona una Opción" itemValue=""/>
-                            <f:selectItem itemLabel="Hombre" itemValue="Masculino"/>
-                            <f:selectItem itemLabel="Mujer" itemValue="Femenino"/>
-                        </p:selectOneMenu>
+                        <p:outputLabel for="color">Color:</p:outputLabel>
+                        <p:inputText id="color" value="#{indexController.inventarioSelecionado.colorProducto}" />
                     </div>
                     <div class="field">
-                        <p:outputLabel for="email">Email:</p:outputLabel>
-                        <p:inputText id="email" value="#{indexController.personaSeleccionada.email}" />
+                        <p:outputLabel for="material">Material:</p:outputLabel>
+                        <p:inputText id="material" value="#{indexController.inventarioSelecionado.materialProducto}" />
                     </div>
                     <div class="field">
-                        <p:outputLabel for="telefono">Telefono:</p:outputLabel>
-                        <p:inputText id="telefono" value="#{indexController.personaSeleccionada.telefono}" />
+                        <p:outputLabel for="tamanio">Tamaño:</p:outputLabel>
+                        <p:inputText id="tamanio" value="#{indexController.inventarioSelecionado.tamanioProducto}" />
+                    </div>
+                    <div class="field">
+                        <p:outputLabel for="imagenUrlProducto">Imagen Producto:</p:outputLabel>
+                        <p:inputText id="imagenUrlProducto" value="#{indexController.inventarioSelecionado.imagenUrlProducto}" />
+                    </div>
+                    <div class="field">
+                        <p:graphicImage id="imagenProducto" value="#{indexController.inventarioSelecionado.imagenUrlProducto}" width="100" height="100" />
                     </div>
                 </p:outputPanel>
                 <f:facet name="footer">
-                    <p:commandButton value="Guardar" icon="pi pi-check" process="persona-ventana @this" actionListener="#{indexController.guardarPersona}" />
-                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalPersona').hide()" class="ui-button-secondary" type="button" />
+                    <p:commandButton value="Guardar" icon="pi pi-check" process="producto-ventana @this" actionListener="#{indexController.guardarProducto}" />
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalProducto').hide()" class="ui-button-secondary" type="button" />
                 </f:facet>
             </p:dialog>
 
-            <p:confirmDialog header="Confirmar" showEffect="fade" widgetVar="eliminarPersonaVentana" width="300" message="¿Esta seguro de Eliminar a la Persona?" severity="warn"> 
-                <p:commandButton value="Si" icon="pi pi-check" process="@this" actionListener="#{indexController.eliminarPersona}" oncomplete="PF('eliminarPersonaVentana').hide()" />
-                <p:commandButton type="button" value="No" icon="pi pi-times" onclick="PF('eliminarPersonaVentana').hide()" styleClass="ui ui-button-secondary" />
+            <p:confirmDialog header="Confirmar" showEffect="fade" widgetVar="eliminarProductoVentana" width="300" message="¿Esta seguro de Eliminar el Producto?" severity="warn"> 
+                <p:commandButton value="Si" icon="pi pi-check" process="@this" actionListener="#{indexController.eliminarProducto}" oncomplete="PF('eliminarProductoVentana').hide()" />
+                <p:commandButton type="button" value="No" icon="pi pi-times" onclick="PF('eliminarProductoVentana').hide()" styleClass="ui ui-button-secondary" />
             </p:confirmDialog>
         </h:form>
 

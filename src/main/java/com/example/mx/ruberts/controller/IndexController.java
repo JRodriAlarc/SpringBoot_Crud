@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.example.mx.ruberts.service.PersonaServicio;
-import com.example.mx.ruberts.model.Persona;
+import com.example.mx.ruberts.service.InventarioServicio;
+import com.example.mx.ruberts.model.Inventario;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -21,9 +21,9 @@ import lombok.Data;
 public class IndexController {
     
     @Autowired
-    PersonaServicio personaServicio;
-    private List<Persona> personas;
-    private Persona personaSeleccionada;
+    InventarioServicio inventarioServicio;
+    private List<Inventario> inventario;
+    private Inventario inventarioSelecionado;
 
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
@@ -33,52 +33,52 @@ public class IndexController {
     }
 
     public void cargarDatos(){
-        this.personas = personaServicio.listarPersonas();
-        personas.forEach((personas) -> logger.info(personas.toString()));
+        this.inventario = inventarioServicio.listarInventario();
+        inventario.forEach((inventario) -> logger.info(inventario.toString()));
     }
 
-    public void agregarPersona(){
-        logger.info("Se crea un objeto 'personaSelecionada' para el caso de agregar");
-        this.personaSeleccionada = new Persona();
+    public void agregarProducto(){
+        logger.info("Se crea un objeto 'inventarioSelecionado' para el caso de agregar");
+        this.inventarioSelecionado = new Inventario();
     }
 
-    public void guardarPersona(){
-        logger.info("Persona a Guardar: " + this.personaSeleccionada);
-        //Agregar Personas
-        if (this.personaSeleccionada.getId_persona() == null) {
-            this.personaServicio.guardarPersona(this.personaSeleccionada);
-            this.personas.add(this.personaSeleccionada); //Agregar a la interfaz
+    public void guardarProducto(){
+        logger.info("Producto a Guardar: " + this.inventarioSelecionado);
+        //Agregar inventario
+        if (this.inventarioSelecionado.getIdProducto() == null) {
+            this.inventarioServicio.guardarProducto(this.inventarioSelecionado);
+            this.inventario.add(this.inventarioSelecionado); //Agregar a la interfaz
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Persona Registrada"));
-        } else{ //Modificar Personas
-            this.personaServicio.guardarPersona(this.personaSeleccionada);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Registrado"));
+        } else{ //Modificar inventario
+            this.inventarioServicio.guardarProducto(this.inventarioSelecionado);
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Persona Actualizada"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Actualizado"));
         }
 
         //Ocultar la ventana Modal
-        PrimeFaces.current().executeScript("PF('ventanaModalPersona').hide()");
+        PrimeFaces.current().executeScript("PF('ventanaModalProducto').hide()");
         
         //Actualizar la tabla
-        PrimeFaces.current().ajax().update("forma-personas:mensajes", "forma-personas:personas-tabla");
+        PrimeFaces.current().ajax().update("forma-inventario:mensajes", "forma-inventario:inventario-tabla");
 
         //Resetear el Objeto seleccionado de la tabla
-        this.personaSeleccionada = null;
+        this.inventarioSelecionado = null;
     }
 
-    public void eliminarPersona(){
-        logger.info("Persona Eliminada: " + this.personaSeleccionada);
-        this.personaServicio.eliminarPersona(this.personaSeleccionada);
+    public void eliminarProducto(){
+        logger.info("Producto Eliminada: " + this.inventarioSelecionado);
+        this.inventarioServicio.eliminarProducto(this.inventarioSelecionado);
         
-        //Eliminar la Persona de la lista en Memoria
-        this.personas.remove(this.personaSeleccionada);
+        //Eliminar la Producto de la lista en Memoria
+        this.inventario.remove(this.inventarioSelecionado);
 
         //Resetear el Objeto seleccionado de la tabla
-        this.personaSeleccionada = null;
+        this.inventarioSelecionado = null;
 
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Persona Eliminada"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Eliminada"));
 
         //Actualizar la tabla
-        PrimeFaces.current().ajax().update("forma-personas:mensajes", "forma-personas:personas-tabla");
+        PrimeFaces.current().ajax().update("forma-inventario:mensajes", "forma-inventario:inventario-tabla");
     }
 }

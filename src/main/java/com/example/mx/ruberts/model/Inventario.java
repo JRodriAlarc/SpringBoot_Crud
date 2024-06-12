@@ -14,14 +14,16 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Persona {
+public class Inventario {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id_persona;
-    String nombre;
-    String apellido;
-    String email;
-    String telefono;
-    String genero;
+    Integer idProducto;
+    String nombreProducto;
+    Integer cantidadProducto;
+    String colorProducto;
+    String materialProducto;
+    String tamanioProducto;
+    String imagenUrlProducto;
+
 }
