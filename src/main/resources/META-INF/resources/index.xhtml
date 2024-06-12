@@ -90,7 +90,8 @@
                         <p:inputText id="imagenUrlProducto" value="#{indexController.inventarioSelecionado.imagenUrlProducto}" />
                     </div>
                     <div class="field">
-                        <p:graphicImage id="imagenProducto" value="#{indexController.inventarioSelecionado.imagenUrlProducto}" width="100" height="100" />
+                        
+                        <p:graphicImage id="imagenProducto" value="#{indexController.inventarioSelecionado.imagenUrlProducto != null ? indexController.inventarioSelecionado.imagenUrlProducto : 'https://i.pinimg.com/564x/0c/bb/aa/0cbbaab0deff7f188a7762d9569bf1b3.jpg'}" width="100" height="100" />
                     </div>
                 </p:outputPanel>
                 <f:facet name="footer">
